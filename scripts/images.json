@@ -1,0 +1,40 @@
+{
+    "images": [
+		{
+            "filename": "rome-01.jpg",
+            "orientation": "horizontal",
+			"country": "italy"
+        },
+        {
+            "filename": "rome-02.jpg",
+            "orientation": "portrait",
+            "country": "italy"
+        },
+        {
+            "filename": "rome-03.jpg",
+            "orientation": "portrait",
+            "country": "italy"
+        },
+        {
+            "filename": "rome-04.jpg",
+            "orientation": "portrait",
+            "country": "italy"
+        },
+        {
+            "filename": "rome-05.jpg",
+            "orientation": "portrait",
+            "country": "italy"
+        },
+        {
+            "filename": "sanfrancisco-01.jpg",
+            "orientation": "horizontal",
+            "country": "usa"
+        },
+        {
+            "filename": "thailand-01.jpg",
+            "orientation": "horizontal",
+            "country": "thailand"
+        }
+    ]
+    
+}
