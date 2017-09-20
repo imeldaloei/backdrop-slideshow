@@ -19,6 +19,7 @@ function init() {
 	    shuffledCollection = shuffleImages(collectionToUse());
 
 	    createMarkup();
+	    startSlideshow();
 	});
 }
 
@@ -62,32 +63,30 @@ function createMarkup() {
 			.find('.background-image:eq('+ i +')').css('background-image','url('+ backgroundImageURL + shuffledCollection[i] +')');
 	}
 
-	var foregroundImage = $('.background-image')[0];
+	$('.background-image:eq(0)').addClass('foreground');
+}
 
-	$(foregroundImage).addClass('foreground').fadeIn(800, function() {
-    	console.log('animation complete');
-    	console.log($(this).css('display'));
-    	//$(this).css('opacity','0.5');
+function startSlideshow() {
+	fadeIn();
+}
 
+function fadeIn() {
+	$('.foreground').fadeIn(800, function() {
     	var currentForeground = $('.background-image').index($('.foreground'));
     	$('.background-image:eq('+ (currentForeground + 1) +')').show();
-
-    	setTimeout(function(){
-    		$('.foreground').fadeOut(8000);
-    	}, 5000);
+    	$('body').append(
+    		$('<div/>').addClass('background-image').css('background-image','url('+ backgroundImageURL + shuffledCollection[2] +')')
+    	);
+    	fadeOut();
   	});
 }
 
-function animateImages() {
-	var noImageExists = $('div.background-image').length === 0;
-
-	if (noImageExists) {
-		createMarkup();
-	};
+function fadeOut() {
+    setTimeout(function(){
+    	$('.foreground').fadeOut(8000);
+    }, 2000);	
 }
 
 $(document).ready(function() {
 	init();
-
-	// console.log('first image = ' + shuffledCollection[0]);
 });
