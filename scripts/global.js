@@ -4,12 +4,7 @@ var imageCollection,
 	shuffledCollection = [],
 	portraitCollection = [],
 	landscapeCollection = [],
-	backgroundImageContainer,
-	backgroundImageURL = '/images/',
-	frontBackgroundImage,
-	frontBackgroundImageURL,
-	backBackgroundImage,
-	backBackgroundImageURL;
+	backgroundImageURL = '/images/';
 
 function init() {
 	
