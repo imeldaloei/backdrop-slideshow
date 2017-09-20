@@ -5,15 +5,20 @@ var imageCollection,
 	portraitCollection = [],
 	landscapeCollection = [],
 	backgroundImageContainer,
-	backgroundImageURL = '/images/homepage/bg/';
+	backgroundImageURL = '/images/',
+	frontBackgroundImage,
+	frontBackgroundImageURL,
+	backBackgroundImage,
+	backBackgroundImageURL;
 
 function init() {
+	
 	$.getJSON("scripts/images.json", function(json) {
 	   	imageCollection = json;
 	    createCollectionByOrientation(imageCollection.images);
 	    shuffledCollection = shuffleImages(collectionToUse());
 
-	    startSlideshow();
+	    createMarkup();
 	});
 }
 
@@ -49,14 +54,29 @@ function shuffleImages(collection) {
   return collection;
 }
 
-function startSlideshow() {
-	backgroundImageContainer = $('.background-image');
-	backgroundImageURL += shuffledCollection[0];
-	backgroundImageContainer.css('background','url(backgroundImageURL)');
+function createMarkup() {	
 
-	console.log(backgroundImageContainer);
-	console.log('first image = ' + shuffledCollection[0]);
-	console.log(backgroundImageURL);
+	for (i = 0; i < 2; i++) { 
+		$('body')
+			.append($('<div/>').addClass('background-image'))
+			.find('.background-image:eq('+ i +')').css('background-image','url('+ backgroundImageURL + shuffledCollection[i] +')');
+	}
+
+	var foregroundImage = $('.background-image')[0];
+
+	$(foregroundImage).addClass('foreground').fadeIn(800, function() {
+    	console.log('animation complete');
+    	console.log($(this).css('display'));
+    	//$(this).css('opacity','0.5');
+  	});
+}
+
+function animateImages() {
+	var noImageExists = $('div.background-image').length === 0;
+
+	if (noImageExists) {
+		createMarkup();
+	};
 }
 
 $(document).ready(function() {
