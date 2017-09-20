@@ -68,6 +68,13 @@ function createMarkup() {
     	console.log('animation complete');
     	console.log($(this).css('display'));
     	//$(this).css('opacity','0.5');
+
+    	var currentForeground = $('.background-image').index($('.foreground'));
+    	$('.background-image:eq('+ (currentForeground + 1) +')').show();
+
+    	setTimeout(function(){
+    		$('.foreground').fadeOut(8000);
+    	}, 5000);
   	});
 }
 
