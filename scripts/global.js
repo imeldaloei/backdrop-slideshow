@@ -4,7 +4,7 @@ var imageCollection,
 	shuffledCollection = [],
 	portraitCollection = [],
 	landscapeCollection = [],
-	backgroundImageURL = '/images/';
+	backgroundImageURL = '/images/'	;
 
 function init() {
 	
@@ -62,25 +62,39 @@ function createMarkup() {
 }
 
 function startSlideshow() {
-	fadeIn();
+	var slideshowLength = shuffledCollection.length,
+		currentForeground = $('.foreground');
+		currentForegroundIndex = $('.background-image').index(currentForeground);
+
+	for (i=0; i < slideshowLength; i++) {
+		fadeImageIn();
+	}
+
+	function fadeImageIn() {
+
+		console.log($(currentForeground).next().css('background-image'));
+
+		$('.foreground').fadeIn(800, function() {
+	    	$('.background-image:eq('+ (currentForegroundIndex + 1) +')').show();
+	    	$('body').append(
+	    		$('<div/>').addClass('background-image').css('background-image','url('+ backgroundImageURL + shuffledCollection[currentForegroundIndex + 2] +')')
+	    	);
+	    	fadeImageOut(currentForeground);
+	  	});
+	}
+
+	function fadeImageOut(image) {
+		console.log("fading image out");
+	    setTimeout(function(){
+	    	$(image).fadeOut(8000, function(){
+	    		$(image).removeClass('foreground');
+	    		$(image).next().addClass('foreground');
+	    	});
+	    }, 2000);	
+	}
+
 }
 
-function fadeIn() {
-	$('.foreground').fadeIn(800, function() {
-    	var currentForeground = $('.background-image').index($('.foreground'));
-    	$('.background-image:eq('+ (currentForeground + 1) +')').show();
-    	$('body').append(
-    		$('<div/>').addClass('background-image').css('background-image','url('+ backgroundImageURL + shuffledCollection[2] +')')
-    	);
-    	fadeOut();
-  	});
-}
-
-function fadeOut() {
-    setTimeout(function(){
-    	$('.foreground').fadeOut(8000);
-    }, 2000);	
-}
 
 $(document).ready(function() {
 	init();
