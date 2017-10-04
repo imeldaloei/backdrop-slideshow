@@ -65,14 +65,18 @@ body {
 	height: 100vh;
 	background-repeat: no-repeat;
     background-size: 100%;
-    display: none;
     position: absolute;
+    display: none;
     left: 0;
     top: 0;
 }
 
 .foreground {
 	z-index: 100;
+}
+
+.background {
+	display: block;
 }
 
 h1 {
