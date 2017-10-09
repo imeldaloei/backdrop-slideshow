@@ -1,20 +1,44 @@
 var imageCollection,
-	viewportOrientation = window.outerWidth > window.outerHeight ? "landscape" : "portrait",
+	viewportOrientation,
+	currentViewportOrientation,
+	newViewportOrientation,
+	hasOrientationChanged = false,
 	collectionToUse,
 	shuffledCollection = [],
 	portraitCollection = [],
 	landscapeCollection = [],
-	backgroundImageURL = '/images/'	;
+	checkResize,
+	backgroundImageURL = '/images/';
 
 function init() {
 	
 	$.getJSON("scripts/images.json", function(json) {
+		currentViewportOrientation = getViewportOrientation();
 	   	imageCollection = json;
 	    createCollectionByOrientation(imageCollection.images);
-	    shuffledCollection = shuffleImages(collectionToUse());
 
 	    startSlideshow();
+		
+		$(window).resize(function() {
+		    clearTimeout(checkResize);
+		    checkResize = setTimeout(checkViewportAfterResize, 500);
+		});
+		 
 	});
+}
+
+function getViewportOrientation() {
+	viewportOrientation = window.outerWidth > window.outerHeight ? "landscape" : "portrait";
+	return viewportOrientation;
+}
+
+function checkViewportAfterResize() {
+	newViewportOrientation = getViewportOrientation();
+
+    if (newViewportOrientation !== currentViewportOrientation) {
+		currentViewportOrientation = newViewportOrientation;
+		startSlideshow();
+	}
 }
 
 function createCollectionByOrientation(collection){
@@ -22,11 +46,6 @@ function createCollectionByOrientation(collection){
 		var filename = collection[i].filename;
   		collection[i].orientation === "portrait" ? portraitCollection.push(filename) : landscapeCollection.push(filename);
 	}
-};
-
-function collectionToUse() {
-	collectionToUse = viewportOrientation === 'portrait' ? portraitCollection : landscapeCollection;
-	return collectionToUse;
 }
 
 function shuffleImages(collection) {
@@ -49,8 +68,12 @@ function shuffleImages(collection) {
 }
 
 function startSlideshow() {
-	var slideshowLength = shuffledCollection.length,
+	var slideshowLength,
 		allImages;
+
+	collectionToUse = currentViewportOrientation === 'portrait' ? portraitCollection : landscapeCollection;
+	shuffledCollection = shuffleImages(collectionToUse);
+	slideshowLength = shuffledCollection.length;
 
 	if (slideshowLength > 1) {
 
