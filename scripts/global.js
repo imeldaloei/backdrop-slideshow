@@ -62,11 +62,9 @@ function startSlideshow() {
 
 		allImages = $('.background-image').css('display','none');
 		allImages.eq(0).addClass('foreground');
-		allImages.eq(1).addClass('background');
 
 		allImages.eq(0)
 			.fadeIn(2000, function(){
-				$('.background').css('display','block');
 				fadeImageOut(0);
 			});
 	}
@@ -76,37 +74,43 @@ function startSlideshow() {
 		var nextIndex = index + 1,
 			currentImage = $('.background-image').eq(index),
 			nextImage = $('.background-image').eq(nextIndex),
-			allImages;
+			allImages = $('.background-image');
 
-		$('.background').css('display','block');
-
-		console.log('index = ' + index);
-
-		if (index > 0 && index !== shuffledCollection.length - 1) {
-			$('body')
-				.append($('<div/>').addClass('background-image background'));
-
-			$('.background-image').eq(nextIndex)	
-				.css('background-image','url('+ backgroundImageURL + shuffledCollection[nextIndex] +')');
+		if (nextIndex === shuffledCollection.length) {
+			replaySlideshow();
+		} else if (nextImage.length === 0 && index < shuffledCollection.length) {
+			if (index < shuffledCollection.length - 1) {
+				addImage();
+				proceedWithFadeOut();			
+			}
+		} else {
+			proceedWithFadeOut();
 		}
 
-		if (index < (shuffledCollection.length - 1)) {
+		function addImage() {
+			$('body')
+				.append($('<div/>').addClass('background-image'));
 
-			$('.background-image').eq(index).fadeOut(4000, function(){
-				currentImage.removeClass('foreground');
-				nextImage.addClass('foreground').removeClass('background');
-					fadeImageOut(nextIndex);
+			$('.background-image').eq(nextIndex)	
+				.css({
+					'background-image':'url('+ backgroundImageURL + shuffledCollection[nextIndex] +')',
+					'display':'block'
+				});	
+		}
+	
+		function proceedWithFadeOut() {
+			allImages.eq(index + 1).css('display','block');
+			allImages.eq(index).addClass('foreground').fadeOut(4000, function(){
+				$(this).removeClass('foreground').css('display','none');	
+				fadeImageOut(index + 1);
 			});
-
-		} else {
-			replaySlideshow();
 		}
 	}
 
 	function replaySlideshow() {
-		console.log('replaySlideshow');
 
 		$('.background').removeClass('background');
+		$('.foreground').removeClass('foreground');
 
 		allImages = $('.background-image');
 		allImages.last().fadeOut(4000);
@@ -116,7 +120,6 @@ function startSlideshow() {
 	}
 
 	function loopFadeOut(index) {
-		console.log('loopFadeOut index = ' + index);
 		if (index < allImages.length - 1) {
 			allImages.eq(index + 1).css('display','block');
 			allImages.eq(index).addClass('foreground').fadeOut(4000, function(){
