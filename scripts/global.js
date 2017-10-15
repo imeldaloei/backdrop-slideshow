@@ -75,6 +75,11 @@ function startSlideshow() {
 	shuffledCollection = shuffleImages(collectionToUse);
 	slideshowLength = shuffledCollection.length;
 
+	allImages = $('.background-image');
+	if (allImages.length > 0) {
+		allImages.remove();	
+	}
+
 	if (slideshowLength > 1) {
 
 		for (i = 0; i < 2; i++) { 
