@@ -14,6 +14,7 @@ function init() {
 	
 	$.getJSON("scripts/images.json", function(json) {
 		currentViewportOrientation = getViewportOrientation();
+		$('body').addClass(currentViewportOrientation);
 	   	imageCollection = json;
 	    createCollectionByOrientation(imageCollection.images);
 
@@ -36,6 +37,8 @@ function checkViewportAfterResize() {
 	newViewportOrientation = getViewportOrientation();
 
     if (newViewportOrientation !== currentViewportOrientation) {
+    	$('body').removeClass(currentViewportOrientation)
+    		.addClass(newViewportOrientation);
 		currentViewportOrientation = newViewportOrientation;
 		startSlideshow();
 	}
