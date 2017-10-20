@@ -1,27 +1,32 @@
 {
     "images": [
 		{
-            "filename": "rome-01.jpg",
-            "orientation": "horizontal",
+            "filename": "florence-01.jpg",
+            "orientation": "portrait",
 			"country": "italy"
         },
         {
-            "filename": "rome-02.jpg",
+            "filename": "rome-06.jpg",
+            "orientation": "landscape",
+            "country": "italy"
+        },
+        {
+            "filename": "rome-07.jpg",
+            "orientation": "landscape",
+            "country": "italy"
+        },
+        {
+            "filename": "rome-08.jpg",
             "orientation": "portrait",
             "country": "italy"
         },
         {
-            "filename": "rome-03.jpg",
+            "filename": "rome-09.jpg",
             "orientation": "portrait",
             "country": "italy"
         },
         {
-            "filename": "rome-04.jpg",
-            "orientation": "portrait",
-            "country": "italy"
-        },
-        {
-            "filename": "rome-05.jpg",
+            "filename": "rome-10.jpg",
             "orientation": "portrait",
             "country": "italy"
         },
